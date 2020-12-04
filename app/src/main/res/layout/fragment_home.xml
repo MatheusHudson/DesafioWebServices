@@ -16,7 +16,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="MARVEL" />
+        app:subtitleTextAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:title="MARVEL"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+        app:titleTextColor="@color/white" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

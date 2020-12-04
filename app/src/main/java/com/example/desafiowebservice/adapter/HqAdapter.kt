@@ -1,5 +1,6 @@
 package com.example.desafiowebservice.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,10 +8,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.desafiowebservice.R
-import kotlinx.android.synthetic.main.recycler_item.view.*
+import com.example.desafiowebservice.enitities.ResultsHq
+import com.squareup.picasso.Picasso
 
-class HqAdapter(): RecyclerView.Adapter<HqAdapter.ResultViewHolder>() {
-    var listResult = ArrayList<String>()
+
+
+class HqAdapter(var listener:OnclickThumbnail): RecyclerView.Adapter<HqAdapter.ResultViewHolder>() {
+    var listaThumb = ArrayList<ResultsHq>()
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_item, parent,false)
@@ -18,19 +23,43 @@ class HqAdapter(): RecyclerView.Adapter<HqAdapter.ResultViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ResultViewHolder, position: Int) {
-        var item = listResult[position]
-        holder.textHq.text = item
+        var item = listaThumb[position]
+
+        Picasso.get().load("${item.thumbnail.path}.${item.thumbnail.extension}").fit().into(holder.thumbHq)
+        holder.text.text = "#${position.toString()} "
+        Log.i("TAG","${item.thumbnail.path}.${item.thumbnail.extension}")
+
+
     }
 
-    override fun getItemCount() = listResult.size
+    override fun getItemCount() = listaThumb.size
 
-    fun addList(list: ArrayList<String>){
-        listResult.addAll(list)
+    fun addList(list: ArrayList<ResultsHq>){
+        listaThumb.addAll(list)
         notifyDataSetChanged()
     }
 
-    class ResultViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        val textHq: TextView = view.textTitle
-        val imageHq: ImageView = view.imageHq
+    inner class ResultViewHolder(view: View): RecyclerView.ViewHolder(view), View.OnClickListener {
+
+        var thumbHq: ImageView = view.findViewById(R.id.imageHqDetail)
+        var text : TextView = view.findViewById(R.id.textTitle)
+
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(p0: View?) {
+            val position = adapterPosition
+            if(position != RecyclerView.NO_POSITION) {
+                listener.onClickThumbnail(position)
+            }
+        }
+
+    }
+
+
+    interface OnclickThumbnail {
+        fun onClickThumbnail(position: Int)
     }
 }
