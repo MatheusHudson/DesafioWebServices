@@ -12,12 +12,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.desafiowebservice.R
 import com.example.desafiowebservice.enitities.ResultsHq
 import com.example.desafiowebservice.services.repository
 import com.example.desafiowebservice.ui.MainViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_hq_details.view.*
+import java.io.Serializable
 
 
 class HqFragment : Fragment() {
@@ -45,6 +47,7 @@ class HqFragment : Fragment() {
         }
         var arrayHq =  mBundle.getSerializable("array") as ResultsHq
 
+
         Picasso.get().load(arrayHq.thumbnail.path + "." + arrayHq.thumbnail.extension).fit().into(view.imageHqDetail)
 
         Log.i("array", arrayHq.dates[0].date)
@@ -65,6 +68,13 @@ class HqFragment : Fragment() {
         }
 
 
+        view.imageHqDetail.setOnClickListener{
+            val bundle = Bundle()
+            bundle.putSerializable("array", arrayHq as Serializable)
+            arguments = bundle
+
+            findNavController().navigate(R.id.action_hqFragment_to_thumbDetailFragment, bundle)
+        }
 
         return view
     }

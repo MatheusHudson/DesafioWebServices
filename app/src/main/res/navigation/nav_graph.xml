@@ -36,5 +36,14 @@
     <fragment
         android:id="@+id/hqFragment"
         android:name="com.example.desafiowebservice.fragments.HqFragment"
-        android:label="HqFragment" />
+        android:label="HqFragment" >
+        <action
+            android:id="@+id/action_hqFragment_to_thumbDetailFragment"
+            app:destination="@id/thumbDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/thumbDetailFragment"
+        android:name="com.example.desafiowebservice.fragments.ThumbDetailFragment"
+        android:label="fragment_thumb_detail"
+        tools:layout="@layout/fragment_thumb_detail" />
 </navigation>
